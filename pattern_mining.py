@@ -1,12 +1,30 @@
 import pickle
+import os
+import requests
 import pandas as pd
 from mlxtend.frequent_patterns import fpgrowth
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import association_rules
 
 # Step 1: Read the CSV file
-file_path = "spotify_dataset.csv"
-data = pd.read_csv(file_path)
+DATASET_URL = os.getenv("DATASET_URL", "https://raw.githubusercontent.com/MatheusFarnese/cloudcomputingTP2/main/spotify_dataset.csv")
+DATASET_PATH = os.getenv("DATASET_PATH", "dataset.csv")
+
+if not os.path.exists(DATASET_PATH):
+    print(f"Downloading dataset from {DATASET_URL}...")
+    response = requests.get(DATASET_URL)
+    if response.status_code == 200:
+        with open(DATASET_PATH, "wb") as f:
+            f.write(response.content)
+        print(f"Dataset downloaded to {DATASET_PATH}")
+    else:
+        print(f"Failed to download dataset: {response.status_code}")
+        exit(1)
+
+data = pd.read_csv(DATASET_PATH)
+
+#file_path = "spotify_dataset.csv"
+#data = pd.read_csv(file_path)
 
 # Ensure 'pid' and 'track_name' columns exist
 if 'pid' not in data.columns or 'track_name' not in data.columns:
