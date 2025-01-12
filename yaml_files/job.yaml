@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pattern-mining
+  namespace: matheussenna
+spec:
+  template:
+    spec:
+      volumes:
+      - name: playlist-recommendation-storage
+        persistentVolumeClaim:
+          claimName: matheussenna-playlist-recommendation-pvc
+      containers:
+      - name: pattern-mining-model
+        image: docker.io/matheusfarnese/pattern-mining:0.1
+        envFrom:
+        - configMapRef:
+            name: playlist-recommendation-configmap
+        volumeMounts:
+        - mountPath: "/app/data"
+          name: playlist-recommendation-storage
+      restartPolicy: Never
+  backoffLimit: 4

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: playlist-recommendation-configmap
+  namespace: matheussenna
+data:
+  MODEL_PATH: "/app/data/association_rules.pkl"
+  DATASET_URL: "https://raw.githubusercontent.com/MatheusFarnese/cloudcomputingTP2/main/spotify_dataset.csv"
+  SERVER_VERSION: "0.1.0"

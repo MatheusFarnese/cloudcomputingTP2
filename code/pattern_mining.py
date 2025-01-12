@@ -43,14 +43,14 @@ basket_df = pd.DataFrame(te_ary, columns=te.columns_)
 print(basket_df)
 
 # Step 4: Run FP-growth
-min_support = 0.03  # Adjust this value based on your requirements
+min_support = 0.1  # Adjust this value based on your requirements
 frequent_itemsets = fpgrowth(basket_df, min_support=min_support, use_colnames=True)
 
 # Display frequent itemsets
 print(frequent_itemsets)
 
 # Step 5: Generate association rules
-min_threshold = 0.5  # Minimum confidence threshold
+min_threshold = 0.6  # Minimum confidence threshold
 rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=min_threshold)
 
 # Display association rules
@@ -63,7 +63,9 @@ rules_subset = rules[['antecedents', 'consequents', 'confidence']]
 rules_subset = rules_subset.sort_values(by='confidence', ascending=False)
 
 # Save to a pickle file
-output_pickle_path = "association_rules.pkl"  # Specify the output path
+
+#output_pickle_path = "association_rules.pkl"  # Specify the output path
+output_pickle_path = "/app/data/association_rules.pkl"
 with open(output_pickle_path, 'wb') as f:
     pickle.dump(rules_subset, f)
 

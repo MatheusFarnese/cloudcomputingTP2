@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matheussenna-playlist-recommendation-pvc
+  namespace: matheussenna
+spec:
+  storageClassName: default-storage-class-matheussenna
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  selector:
+    matchLabels:
+      namespace: matheussenna

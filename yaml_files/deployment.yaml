@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playlist-recommendation-deployment
+  namespace: matheussenna
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playlist-recommendation
+  template:
+    metadata:
+      labels:
+        app: playlist-recommendation
+    spec:
+      volumes:
+      - name: playlist-recommendation-storage
+        persistentVolumeClaim:
+          claimName: matheussenna-playlist-recommendation-pvc
+      containers:
+      - name: playlist-recommendation-backend
+        image: docker.io/matheusfarnese/playlist-recommendation
+        envFrom:
+        - configMapRef:
+            name: playlist-recommendation-configmap
+        volumeMounts:
+        - mountPath: "/app/data"
+          name: playlist-recommendation-storage
