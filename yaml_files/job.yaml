@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pattern-mining
+  name: pattern-mining2
   namespace: matheussenna
 spec:
   template:
