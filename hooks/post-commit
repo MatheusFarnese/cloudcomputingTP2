@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# File paths
+FILE_A="yaml_files/job.yaml" # Replace with the actual path to File A
+FILE_B="dataset/spotify_dataset.csv" # Replace with the actual path to File B
+TRACKER=".b_changes_count" # File to track changes to File B
+
+# Initialize a tracker file if it doesn't exist
+if [ ! -f "$TRACKER" ]; then
+    echo 0 > "$TRACKER"
+fi
+
+# Get the current modification count for File B
+MOD_COUNT=$(<"$TRACKER")
+
+# Check if File B was modified
+if git diff --name-only HEAD~1 HEAD | grep -q "$FILE_B"; then
+    # Increment the modification count
+    MOD_COUNT=$((MOD_COUNT + 1))
+    echo "$MOD_COUNT" > "$TRACKER"
+
+    # Toggle "pattern-mining" in File A
+    if (( MOD_COUNT % 2 == 0 )); then
+        sed -i 's/name: pattern-mining/name: pattern-mining2/' "$FILE_A"
+    else
+        sed -i 's/name: pattern-mining2/name: pattern-mining/' "$FILE_A"
+    fi
+
+    # Stage the changes to File A
+    git add "$FILE_A"
+fi
+
