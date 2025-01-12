@@ -7,7 +7,7 @@ from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import association_rules
 
 # Step 1: Read the CSV file
-DATASET_URL = os.getenv("DATASET_URL", "https://raw.githubusercontent.com/MatheusFarnese/cloudcomputingTP2/main/spotify_dataset.csv")
+DATASET_URL = os.getenv("DATASET_URL", "https://raw.githubusercontent.com/MatheusFarnese/cloudcomputingTP2/main/dataset/spotify_dataset.csv")
 DATASET_PATH = os.getenv("DATASET_PATH", "dataset.csv")
 
 if not os.path.exists(DATASET_PATH):
