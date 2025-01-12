@@ -16,6 +16,9 @@ spec:
         envFrom:
         - configMapRef:
             name: playlist-recommendation-configmap
+        env:
+        - name: DATASET_URL
+          value: "https://raw.githubusercontent.com/MatheusFarnese/cloudcomputingTP2/main/dataset/spotify_dataset.csv"
         volumeMounts:
         - mountPath: "/app/data"
           name: playlist-recommendation-storage
