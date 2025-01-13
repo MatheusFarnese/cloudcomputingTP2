@@ -12,7 +12,7 @@ spec:
           claimName: matheussenna-playlist-recommendation-pvc
       containers:
       - name: pattern-mining22-model
-        image: docker.io/matheusfarnese/pattern-mining:testeCI1
+        image: docker.io/matheusfarnese/pattern-mining:modv1
         envFrom:
         - configMapRef:
             name: playlist-recommendation-configmap
