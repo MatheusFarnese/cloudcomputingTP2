@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pattern-mining
+  name: pattern-mining2
   namespace: matheussenna
 spec:
   template:
@@ -11,8 +11,8 @@ spec:
         persistentVolumeClaim:
           claimName: matheussenna-playlist-recommendation-pvc
       containers:
-      - name: pattern-mining2-model
-        image: docker.io/matheusfarnese/pattern-mining:modv1
+      - name: pattern-mining22-model
+        image: docker.io/matheusfarnese/pattern-mining:testeCI1
         envFrom:
         - configMapRef:
             name: playlist-recommendation-configmap
