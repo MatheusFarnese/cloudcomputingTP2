@@ -19,7 +19,7 @@ spec:
           claimName: matheussenna-playlist-recommendation-pvc
       containers:
       - name: playlist-recommendation-backend
-        image: docker.io/matheusfarnese/playlist-recommendation:testeCI
+        image: docker.io/matheusfarnese/playlist-recommendation:apiv1
         envFrom:
         - configMapRef:
             name: playlist-recommendation-configmap
