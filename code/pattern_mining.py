@@ -10,16 +10,15 @@ from mlxtend.frequent_patterns import association_rules
 DATASET_URL = os.getenv("DATASET_URL", "https://raw.githubusercontent.com/MatheusFarnese/cloudcomputingTP2/main/dataset/spotify_dataset.csv")
 DATASET_PATH = os.getenv("DATASET_PATH", "dataset.csv")
 
-if not os.path.exists(DATASET_PATH):
-    print(f"Downloading dataset from {DATASET_URL}...")
-    response = requests.get(DATASET_URL)
-    if response.status_code == 200:
-        with open(DATASET_PATH, "wb") as f:
-            f.write(response.content)
-        print(f"Dataset downloaded to {DATASET_PATH}")
-    else:
-        print(f"Failed to download dataset: {response.status_code}")
-        exit(1)
+print(f"Downloading dataset from {DATASET_URL}...")
+response = requests.get(DATASET_URL)
+if response.status_code == 200:
+    with open(DATASET_PATH, "wb") as f:
+        f.write(response.content)
+    print(f"Dataset downloaded to {DATASET_PATH}")
+else:
+    print(f"Failed to download dataset: {response.status_code}")
+    exit(1)
 
 data = pd.read_csv(DATASET_PATH)
 
@@ -43,7 +42,7 @@ basket_df = pd.DataFrame(te_ary, columns=te.columns_)
 print(basket_df)
 
 # Step 4: Run FP-growth
-min_support = 0.1  # Adjust this value based on your requirements
+min_support = 0.03  # Adjust this value based on your requirements
 frequent_itemsets = fpgrowth(basket_df, min_support=min_support, use_colnames=True)
 
 # Display frequent itemsets
@@ -64,9 +63,9 @@ rules_subset = rules_subset.sort_values(by='confidence', ascending=False)
 
 # Save to a pickle file
 
-#output_pickle_path = "association_rules.pkl"  # Specify the output path
 output_pickle_path = "/app/data/association_rules.pkl"
 with open(output_pickle_path, 'wb') as f:
     pickle.dump(rules_subset, f)
 
 print(f"Rules saved to {output_pickle_path}")
+print(f"Test print 1.")

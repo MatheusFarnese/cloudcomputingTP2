@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Configuration
 #MODEL_PATH = "association_rules.pkl"
 MODEL_PATH = "/app/data/association_rules.pkl"
-MODEL_VERSION = "1.0.0"
+MODEL_VERSION = "1.1.0"
 
 # Load the model initially
 def load_model():
@@ -21,58 +21,6 @@ def load_model():
         raise FileNotFoundError(f"Model file not found at {MODEL_PATH}")
 
 app.model, app.model_date = load_model()
-
-
-#def get_recommendations(user_songs, model, n=5):
-#    """
-#    Generate recommendations based on user_songs using association rules.
-#
-#    Parameters:
-#    - user_songs: List of songs the user likes.
-#    - model: DataFrame of association rules with antecedents, consequents, and confidence.
-#    - n: Number of recommendations to return.
-#
-#    Returns:
-#    - List of recommended songs.
-#    """
-#    recommendations = []
-#    
-#    # First search: exact subset match
-#    for _, row in model.iterrows():
-#        antecedents = row['antecedents']
-#        consequents = row['consequents']
-#        
-#        # Check if the user's songs match the antecedents exactly
-#        if antecedents.issubset(user_songs):
-#            recommendations.extend(list(consequents))
-#    
-#    # Remove duplicates and songs already in the user's list
-#    recommendations = [song for song in recommendations if song not in user_songs]
-#    
-#    # If recommendations are empty, perform the second search
-#    if not recommendations:
-#        for _, row in model.iterrows():
-#            antecedents = row['antecedents']
-#            consequents = row['consequents']
-#            
-#            # Check if any of the user's songs match any of the antecedents
-#            if antecedents & user_songs:  # Intersection of sets
-#                recommendations.extend(list(consequents))
-#        
-#        # Remove duplicates and songs already in the user's list
-#        recommendations = [song for song in recommendations if song not in user_songs]
-#
-#    # Rank recommendations by confidence
-#    ranked_recommendations = sorted(
-#        list(set(recommendations)),
-#        key=lambda x: max(
-#            model.loc[model['consequents'].apply(lambda c: x in c), 'confidence'].max(),
-#            0
-#        ),
-#        reverse=True
-#    )
-#    
-#    return ranked_recommendations[:n]
 
 def get_recommendations(user_songs, model, n=5):
     """
@@ -116,6 +64,11 @@ def get_recommendations(user_songs, model, n=5):
 @app.route('/api/rules', methods=['GET'])
 def get_rules():
     return jsonify(app.model.to_json())
+
+@app.route('/api/version', methods=['GET'])
+def get_version():
+    return jsonify({"Version": MODEL_VERSION})
+
 
 @app.route("/api/recommend", methods=["POST"])
 def recommend():
