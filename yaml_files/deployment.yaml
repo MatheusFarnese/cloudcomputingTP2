@@ -4,7 +4,7 @@ metadata:
   name: playlist-recommendation-deployment
   namespace: matheussenna
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: playlist-recommendation
