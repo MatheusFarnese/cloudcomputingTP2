@@ -8,5 +8,5 @@ spec:
     app: playlist-recommendation
   ports:
     - protocol: TCP
-      port: 52004
-      targetPort: 8000
+      port: 17070
+      targetPort: 5000
